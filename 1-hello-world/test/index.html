@@ -26,6 +26,7 @@
         y = 2;
 
     var shapeToPass;
+    var isCorrect;
 
     function init() {
         canvas = document.getElementById('can');
@@ -158,9 +159,15 @@ $(document).ready(function(){
 
       success: function(data) {
         data.forEach((label) => console.log(label));
+        for(var i = 0; i < data.length; i++) {
+          if(data[i].toString() === shapeToPass) {
+            isCorrect = true;
+          //  console.log(data[i]);
+          }
+        }
       },
      error: function(data){
-       alert("fail");
+       alert("Sorry something went wrong :(");
      }
     });
   });
