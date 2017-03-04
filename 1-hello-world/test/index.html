@@ -2,15 +2,16 @@
 
 <link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,‌​100italic,300,300ita‌​lic,400italic,500,50‌​0italic,700,700itali‌​c,900italic,900' rel='stylesheet' type='text/css'>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+d
 
 
 <html>
   <head>
     <title>Picasso</title>
-    
-    	<!-- CSS stylesheet -->	
-    	<link href="css/styles.css" rel="stylesheet" type="text/css">
+
+        <!-- CSS stylesheet -->
+        <link href="css/styles.css" rel="stylesheet" type="text/css">
 
       <!-- Draw javascript -->
 
@@ -21,16 +22,16 @@
         prevY = 0,
         currY = 0,
         dot_flag = false;
- 
+
     var x = "black",
-        y = 2;
-   
+        y = 10;
+
     function init() {
         canvas = document.getElementById('can');
         ctx = canvas.getContext("2d");
         w = canvas.width;
         h = canvas.height;
-   
+
         canvas.addEventListener("mousemove", function (e) {
             findxy('move', e)
         }, false);
@@ -44,36 +45,33 @@
             findxy('out', e)
         }, false);
     }
-   
+
     function color(obj) {
         switch (obj.id) {
-            case "green":
-                x = "green";
-                break;
-            case "blue":
-                x = "blue";
+            case "pink":
+                x = "#F3AAA7";
                 break;
             case "red":
-                x = "red";
+                x = "#EF7067";
                 break;
             case "yellow":
-                x = "yellow";
+                x = "#ECD779";
                 break;
-            case "orange":
-                x = "orange";
+            case "green":
+                x = "#57B661";
                 break;
-            case "black":
-                x = "black";
+            case "blue":
+                x = "#3180A0";
                 break;
             case "white":
-                x = "white";
+                x = "#F9F8F2";
                 break;
         }
-        if (x == "white") y = 14;
-        else y = 2;
-   
+        if (x == "#F9F8F2") y = 30;
+        else y = 10;
+
     }
-   
+
     function draw() {
         ctx.beginPath();
         ctx.moveTo(prevX, prevY);
@@ -83,14 +81,14 @@
         ctx.stroke();
         ctx.closePath();
     }
-   
+
     function findxy(res, e) {
         if (res == 'down') {
             prevX = currX;
             prevY = currY;
             currX = e.clientX - canvas.offsetLeft;
             currY = e.clientY - canvas.offsetTop;
-   
+
             flag = true;
             dot_flag = true;
             if (dot_flag) {
@@ -114,83 +112,79 @@
             }
         }
     }
-    
+    function erase(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 </script>
 
 <script>
-	function submitButton(){
-		
-	}
+$(document).ready(function(){
+  $("#submit").click(function(){
+    canvas = document.getElementById('can');
+    var image = canvas.toDataURL();
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/figureOutImage",
+      data: "{}",
+      dataType: "json",
+
+      success: function(data) {
+       alert("yay");
+      },
+     error: function(data){
+       alert("fail");
+     }
+    });
+  });
+});
 </script>
 
   </head>
   <body onload="init()">
-  
+
 <div id="container">
 
   <div id="header">
   <img src="picasso.png">
-   
 
-    
-    <p>Select a level, then draw the shape!</p>
-    
-    
-    
+
+
+    <p>Draw the shape and press submit when you're done!</p>
+
+
+
 
   </div> <!-- end header -->
 
   <div id="main">
-    
-    <img src="whiteboard.jpg">
-    <canvas id="can" width="700" height="460" style="position:absolute; border: 10px solid yellow"></canvas>
 
-    <ul>
-        <li class="dropdown">
-            <button class="dropbtn">Easy</button>
-              <div class="dropdown-content">
-                <a href="#">Circle</a>
-                <a href="#">Triangle</a>
-                <a href="#">Square</a>
-                <a href="#">Line</a>
-              </div>
-        </li>
-        <li class="dropdown">
-            <button class="dropbtn">Medium</button>
-              <div class="dropdown-content">
-                <a href="#">Trapezoid</a>
-                <a href="#">Oval</a>
-                <a href="#">Heart</a>
-              </div>
-        </li>
-          <li class="dropdown">
-            <button class="dropbtn">Hard</button>
-              <div class="dropdown-content">
-                <a href="#">Star</a>
-                <a href="#">Octagon</a>
-              </div>
-          </li>
-    </ul>
+<div id="colors">
+  <div style="position:absolute;"></div>
+        <div style="position:absolute;top:42.5%;left:22.5%;z-index:40;width:30px;height:30px; border-radius:20px;background:#F3AAA7;" id="pink" onclick="color(this)";></div>
+        <div style="position:absolute;top:50.5%;left:22.5%;z-index:40;width:30px;height:30px;border-radius:20px;background:#EF7067;" id="red" onclick="color(this)"></div>
+        <div style="position:absolute;top:59%;left:22.5%;z-index:40;width:30px;height:30px;border-radius:20px;background: #ECD779;" id="yellow" onclick="color(this)"></div>
+        <div style="position:absolute;top:67.5%;left:22.5%;z-index:40;width:30px;height:30px;border-radius:20px;background:#57B661;" id="green" onclick="color(this)"></div>
+        <div style="position:absolute;top:75.5%;left:22.5%;z-index:40;width:30px;height:30px;border-radius:20px;background:#3180A0;" id="blue" onclick="color(this)"></div>
+        <div style="position:absolute;top:81.9%;z-index:40;left:22%; font-family: 'Roboto', Arial, sans-serif">Eraser</div>
+        <div style="position:absolute;top:86%;left:22.5%;z-index:40;width:30px;height:30px;border-radius:20px;background:#F9F8F2;border:2px solid;" id="white" onclick="color(this)"></div>
+</div>
 
-	
-  
+    <div id="whiteboard-container">
+        <img src="whiteboard.jpg">
+        <canvas id="can" width="600" height="420" style="position:absolute;"></canvas>
+    </div>
+
+    <div id="buttons">
+        <button type="button" id="submit">Submit</button>
+        <button type="button" onclick="erase()">Clear</button>
+    </div>
+
 
   </div> <!-- end main -->
 
 
 </div><!-- end container -->
 
-<button type="button" id="userImage" onclick="submitButton()">Submit</button>
 
-
-
-
-
-
-<!-- JAVASCRIPT -->
-	<script src="js/jquery.js"></script>
-	<script src="js/jqueryui.js"></script>
-	<script src="js/script.js"></script>
- 
   </body>
 </html>
