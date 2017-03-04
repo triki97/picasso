@@ -27,7 +27,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/', router);
 
+var fs = require('fs');
 
+var path = require('path');
 
 // Imports the Google Cloud client library
 const Vision = require('@google-cloud/vision');
@@ -47,11 +49,16 @@ router.get('/', (req, res) => {
 
 app.post('/', function(req, res){
   // The name of the image file to annotate
-  const fileName = 'test/giraffe.jpg';
+  console.log(req.body.NameofShape);
+  const fileName = req.body.ImageLocation;
 
+  var replacedFileName = fileName.replace(/^data:image\/png;base64,/, '');
+  fs.writeFile(path.resolve(__dirname, 'image.png'), replacedFileName, 'base64', function(err) {
+    if (err) throw err;
+  });
 
   // Performs label detection on the image file
-  visionClient.detectLabels(fileName)
+  visionClient.detectLabels('image.png')
     .then((results) => {
       const labels = results[0];
 

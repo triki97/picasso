@@ -23,7 +23,7 @@
         dot_flag = false;
 
     var x = "black",
-        y = 10;
+        y = 2;
 
     function init() {
         canvas = document.getElementById('can');
@@ -67,7 +67,7 @@
                 break;
         }
         if (x == "#F9F8F2") y = 30;
-        else y = 10;
+        else y = 2;
 
     }
 
@@ -119,12 +119,14 @@
 <script>
 $(document).ready(function(){
   $("#submit").click(function(){
+    var properlyFormatedURL;
     canvas = document.getElementById('can');
-    var image = canvas.toDataURL();
+    var image = canvas.toDataURL('image/png');
+
     $.ajax({
       type: "POST",
       url: "http://localhost:8080",
-      data: "{}",
+      data: {ImageLocation: image, NameofShape: 'circle'},
       dataType: "json",
 
       success: function(data) {
