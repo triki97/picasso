@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
 
 app.post('/', function(req, res){
   // The name of the image file to annotate
-  console.log(req.body.NameofShape);
+  //console.log(req.body.NameofShape);
   const fileName = req.body.ImageLocation;
 
   var replacedFileName = fileName.replace(/^data:image\/png;base64,/, '');
@@ -62,9 +62,11 @@ app.post('/', function(req, res){
     .then((results) => {
       const labels = results[0];
 
-      console.log('Labels:');
-      labels.forEach((label) => console.log(label));
+      //console.log('Labels:');
+      res.send(labels);
+      //labels.forEach((label) => console.log(label));
     });
+
 });
 
 
