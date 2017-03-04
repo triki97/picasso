@@ -21,8 +21,10 @@ body {
 	
 }
 
-#whiteboard-container {
-	
+#can {
+	position: relative;
+	z-index: 20;
+	left: 430px;
 }
 
 
@@ -46,22 +48,21 @@ body {
 }
 
 #main {
-	width: auto;
-	height: 400px;
 	margin: 0px auto;
-	padding: 30px;
-	margin-top: 100px;
-
+	display: inline-block;
 }
 
 #main img {
-	display:none;
 	width: auto;
 	height: 460px;
-	margin-bottom: 200px;
-	margin-right: 250px;
-	position: fixed;
-	top: 200px;
+	position: absolute;
+	padding-left: 195px;
+	user-drag: none;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 
@@ -122,12 +123,7 @@ li.dropdown {
     display: block;
 }
 
-#can {
-	width: 1000px;
-	height: 600px;
-	position: absolute;
-	border: 2px;
-}
+
 
 
 

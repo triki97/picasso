@@ -8,8 +8,8 @@
 <html>
   <head>
     <title>Picasso</title>
-
-    	<!-- CSS stylesheet -->
+    
+    	<!-- CSS stylesheet -->	
     	<link href="css/styles.css" rel="stylesheet" type="text/css">
 
       <!-- Draw javascript -->
@@ -21,16 +21,16 @@
         prevY = 0,
         currY = 0,
         dot_flag = false;
-
+ 
     var x = "black",
         y = 2;
-
+   
     function init() {
         canvas = document.getElementById('can');
         ctx = canvas.getContext("2d");
         w = canvas.width;
         h = canvas.height;
-
+   
         canvas.addEventListener("mousemove", function (e) {
             findxy('move', e)
         }, false);
@@ -44,7 +44,7 @@
             findxy('out', e)
         }, false);
     }
-
+   
     function color(obj) {
         switch (obj.id) {
             case "green":
@@ -71,9 +71,9 @@
         }
         if (x == "white") y = 14;
         else y = 2;
-
+   
     }
-
+   
     function draw() {
         ctx.beginPath();
         ctx.moveTo(prevX, prevY);
@@ -83,14 +83,14 @@
         ctx.stroke();
         ctx.closePath();
     }
-
+   
     function findxy(res, e) {
         if (res == 'down') {
             prevX = currX;
             prevY = currY;
             currX = e.clientX - canvas.offsetLeft;
             currY = e.clientY - canvas.offsetTop;
-
+   
             flag = true;
             dot_flag = true;
             if (dot_flag) {
@@ -114,30 +114,36 @@
             }
         }
     }
+    
+</script>
+
+<script>
+	function submitButton(){
+		
+	}
 </script>
 
   </head>
-  <body>
-
+  <body onload="init()">
+  
 <div id="container">
 
   <div id="header">
   <img src="picasso.png">
+   
 
-
-
+    
     <p>Select a level, then draw the shape!</p>
-    <div id="whiteboard-container">
-      <img src="whiteboard.jpg">
-
-    </div>
-
-
+    
+    
+    
 
   </div> <!-- end header -->
 
   <div id="main">
-
+    
+    <img src="whiteboard.jpg">
+    <canvas id="can" width="700" height="460" style="position:absolute; border: 10px solid yellow"></canvas>
 
     <ul>
         <li class="dropdown">
@@ -166,13 +172,25 @@
           </li>
     </ul>
 
-
-
+	
+  
 
   </div> <!-- end main -->
 
 
 </div><!-- end container -->
 
+<button type="button" id="userImage" onclick="submitButton()">Submit</button>
+
+
+
+
+
+
+<!-- JAVASCRIPT -->
+	<script src="js/jquery.js"></script>
+	<script src="js/jqueryui.js"></script>
+	<script src="js/script.js"></script>
+ 
   </body>
 </html>
