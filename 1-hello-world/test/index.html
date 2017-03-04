@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			ul {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+		</style>
+		<meta charset="ISO-8859-1">
+		<title>Picasso</title>
+
+	</head>
+	<body>
+		<ul>
+			<li class="dropdown">
+				<button class="dropbtn">Easy</button>
+				<div class="dropdown-content">
+					<a href="#">Circle</a>
+   					<a href="#">Triangle</a>
+    				<a href="#">Square</a>
+    				<a href="#">Line</a>
+				</div>
+			</li>
+			<li class="dropdown">
+				<button class="dropbtn">Medium</button>
+				<div class="dropdown-content">
+					<a href="#">Trapezoid</a>
+   					<a href="#">Oval</a>
+    				<a href="#">Heart</a>
+				</div>
+			</li>
+			<li class="dropdown">
+				<button class="dropbtn">Hard</button>
+				<div class="dropdown-content">
+					<a href="#">Star</a>
+   					<a href="#">Octagon</a>
+				</div>
+			</li>
+		</ul>
+	</body>
+</html>

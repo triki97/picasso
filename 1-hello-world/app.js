@@ -17,12 +17,15 @@ const express = require('express');
 
 const app = express();
 
-// [START hello_world]
-// Say hello!
-app.get('/', (req, res) => {
-  res.status(200).send('Hello, world!');
+var router = express.Router();
+
+
+router.get('/', (req, res) => {
+  res.sendfile('test/index.html');
 });
-// [END hello_world]
+
+
+app.use('/', router);
 
 if (module === require.main) {
   // [START server]
