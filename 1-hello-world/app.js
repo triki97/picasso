@@ -19,6 +19,8 @@ const app = express();
 
 var router = express.Router();
 
+app.use(express.static('test'));
+
 
 router.get('/', (req, res) => {
   res.sendfile('test/index.html');

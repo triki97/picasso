@@ -1,84 +1,178 @@
 <!DOCTYPE html>
+
+<link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,‌​100italic,300,300ita‌​lic,400italic,500,50‌​0italic,700,700itali‌​c,900italic,900' rel='stylesheet' type='text/css'>
+
+
+
 <html>
-	<head>
-		<style>
-			ul {
-	list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
+  <head>
+    <title>Picasso</title>
 
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
+    	<!-- CSS stylesheet -->
+    	<link href="css/styles.css" rel="stylesheet" type="text/css">
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+      <!-- Draw javascript -->
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
+      <script type="text/javascript">
+    var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
 
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+    var x = "black",
+        y = 2;
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+    function init() {
+        canvas = document.getElementById('can');
+        ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+        canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+    }
 
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-}
-		</style>
-		<meta charset="ISO-8859-1">
-		<title>Picasso</title>
+    function color(obj) {
+        switch (obj.id) {
+            case "green":
+                x = "green";
+                break;
+            case "blue":
+                x = "blue";
+                break;
+            case "red":
+                x = "red";
+                break;
+            case "yellow":
+                x = "yellow";
+                break;
+            case "orange":
+                x = "orange";
+                break;
+            case "black":
+                x = "black";
+                break;
+            case "white":
+                x = "white";
+                break;
+        }
+        if (x == "white") y = 14;
+        else y = 2;
 
-	</head>
-	<body>
-		<ul>
-			<li class="dropdown">
-				<button class="dropbtn">Easy</button>
-				<div class="dropdown-content">
-					<a href="#">Circle</a>
-   					<a href="#">Triangle</a>
-    				<a href="#">Square</a>
-    				<a href="#">Line</a>
-				</div>
-			</li>
-			<li class="dropdown">
-				<button class="dropbtn">Medium</button>
-				<div class="dropdown-content">
-					<a href="#">Trapezoid</a>
-   					<a href="#">Oval</a>
-    				<a href="#">Heart</a>
-				</div>
-			</li>
-			<li class="dropdown">
-				<button class="dropbtn">Hard</button>
-				<div class="dropdown-content">
-					<a href="#">Star</a>
-   					<a href="#">Octagon</a>
-				</div>
-			</li>
-		</ul>
-	</body>
+    }
+
+    function draw() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
+            }
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
+        }
+    }
+</script>
+
+  </head>
+  <body>
+
+<div id="container">
+
+  <div id="header">
+  <img src="picasso.png">
+
+
+
+    <p>Select a level, then draw the shape!</p>
+    <div id="whiteboard-container">
+      <img src="whiteboard.jpg">
+
+    </div>
+
+
+
+  </div> <!-- end header -->
+
+  <div id="main">
+
+
+    <ul>
+        <li class="dropdown">
+            <button class="dropbtn">Easy</button>
+              <div class="dropdown-content">
+                <a href="#">Circle</a>
+                <a href="#">Triangle</a>
+                <a href="#">Square</a>
+                <a href="#">Line</a>
+              </div>
+        </li>
+        <li class="dropdown">
+            <button class="dropbtn">Medium</button>
+              <div class="dropdown-content">
+                <a href="#">Trapezoid</a>
+                <a href="#">Oval</a>
+                <a href="#">Heart</a>
+              </div>
+        </li>
+          <li class="dropdown">
+            <button class="dropbtn">Hard</button>
+              <div class="dropdown-content">
+                <a href="#">Star</a>
+                <a href="#">Octagon</a>
+              </div>
+          </li>
+    </ul>
+
+
+
+
+  </div> <!-- end main -->
+
+
+</div><!-- end container -->
+
+  </body>
 </html>
