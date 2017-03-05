@@ -26,6 +26,7 @@
         y = 2;
 
     var shapeToPass;
+    var labels = [];
     var isCorrect;
 
     function init() {
@@ -33,6 +34,7 @@
         ctx = canvas.getContext("2d");
         w = canvas.width;
         h = canvas.height;
+        $('#answer').hide();
 
         canvas.addEventListener("mousemove", function (e) {
             findxy('move', e)
@@ -117,8 +119,30 @@
             }
         }
     }
+    function tryAgain(){
+      if(isCorrect){
+        writeInstructions();
+        $('#yes').hide();
+        $('#no').hide();
+        isCorrect = false;
+      }
+      $('#no').hide();
+      $('#answer').hide();
+      $('#suggested-shapes').hide();
+      erase();
+      document.getElementById('shapes').innerHTML = "";
+    }
     function erase(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var canvas1 = document.getElementById('circle')
+        ctx1 = canvas1.getContext('2d');
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        var canvas2 = document.getElementById('square')
+        ctx2 = canvas2.getContext('2d');
+        ctx2.clearRect(0, 0, canvas1.width, canvas1.height);
+        var canvas3 = document.getElementById('triangle')
+        ctx3 = canvas3.getContext('2d');
+        ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     }
 
     function writeInstructions(){
@@ -142,6 +166,112 @@
         shapeToPass = shape;
         instructions.innerHTML = temp;
     }
+
+    function drawCircle(){
+      var c = document.getElementById('circle').getContext('2d');
+      var duration = 3000;
+      var delay = 10;
+      var stepT = duration/delay; // steps needed
+      var cT = 0; // step counter
+      c.fillStyle = 'white'
+      var end = 100; // endpoint in percent
+      var int = setInterval(function(){
+          c.fillRect(0,0,300,300);
+          c.fillStyle = "#F9F8F2";
+          c.fill();
+          c.strokeStyle = 'black';
+          c.beginPath();
+          c.arc(150, 120, 100, -.5*Math.PI, (-.5*Math.PI + 2*Math.PI / 100 * end * cT / stepT));
+          c.lineWidth = 1;
+          c.stroke();
+          if(++cT>stepT){
+              clearInterval(int);
+          }
+      },delay);
+    }
+      function drawSquare(){
+            var canvas = document.getElementById("square");
+            var c = canvas.getContext("2d");
+            var curPoint = {
+                x : 10,
+                y : 10,
+                index : 0
+            }
+            var points = [{x:260, y:10}, {x:260, y:260}, {x:10, y:260}, {x:10,y:10}];
+            function toPoints(points){
+                var targetPoint = points[curPoint.index];
+                var tx = targetPoint.x - curPoint.x,
+                    ty = targetPoint.y - curPoint.y
+                var dist = Math.sqrt(tx*tx+ty*ty),
+                    rad = Math.atan2(ty,tx);
+                var velX = (tx/dist)*1;
+                var velY = (ty/dist)*1;
+                curPoint.x += velX;
+                curPoint.y += velY;
+                if(dist < 2){
+                   curPoint.index++;
+                }
+                c.fillRect(curPoint.x, curPoint.y, 1, 1);
+                if(curPoint.index < points.length){
+                   setTimeout(function(){toPoints(points)}, 10);
+                }
+            }
+            toPoints(points);
+        }
+
+      function drawTriangle(){
+        var canvas = document.getElementById("triangle");
+        var c = canvas.getContext("2d");
+        var curPoint = {
+            x : 135,
+            y : 10,
+            index : 0
+        }
+        var points = [{x:260, y:260}, {x:10, y:260}, {x:135, y:10}];
+        function toPoints(points){
+            var targetPoint = points[curPoint.index];
+            var tx = targetPoint.x - curPoint.x,
+                ty = targetPoint.y - curPoint.y
+            var dist = Math.sqrt(tx*tx+ty*ty),
+                rad = Math.atan2(ty,tx);
+            var velX = (tx/dist)*1;
+            var velY = (ty/dist)*1;
+            curPoint.x += velX;
+            curPoint.y += velY;
+            if(dist < 2){
+               curPoint.index++;
+            }
+            c.fillRect(curPoint.x, curPoint.y, 1, 1);
+            if(curPoint.index < points.length){
+               setTimeout(function(){toPoints(points)}, 10);
+            }
+        }
+        toPoints(points);
+    }
+
+    function showAnswer(){
+      switch(shapeToPass){
+        case 'circle':
+          drawCircle();
+          break;
+        case 'square':
+          drawSquare();
+          break;
+        case 'triangle':
+          drawTriangle();
+          break;
+      }
+
+    }
+
+    function suggestions() {
+      for(var i = 0; i < labels.length; i++){
+        var temp = "<li>" + labels[i] + "</li>"
+        document.getElementById('shapes').innerHTML += temp;
+      }
+      labels = [];
+
+    }
 </script>
 
 <script>
@@ -160,11 +290,25 @@ $(document).ready(function(){
       success: function(data) {
         data.forEach((label) => console.log(label));
         for(var i = 0; i < data.length; i++) {
-          if(data[i].toString() === shapeToPass) {
+          var label = data[i].toString();
+          labels.push(label);
+          if(label === shapeToPass) {
             isCorrect = true;
-          //  console.log(data[i]);
           }
         }
+        if(isCorrect) {
+          //console.log("toggle");
+          $('#yes').show();
+          $('#no').hide();
+        }
+        else {
+          $('#no').show();
+          $('#yes').hide();
+          $('#answer').show();
+        }
+        $('#suggested-shapes').show();
+        suggestions();
+
       },
      error: function(data){
        alert("Sorry something went wrong :(");
@@ -176,6 +320,20 @@ $(document).ready(function(){
 
 
 </script>
+
+<div id="yes">
+  <img src="yes.png">
+</div>
+
+<div id="no">
+  <img src="no.png">
+</div>
+
+<div id="suggested-shapes">
+    Despite being a renowned artist, Picasso still makes mistakes. Here is a list of what we thought you drew.
+    <ul id="shapes">
+    </ul>
+</div>
 
   </head>
   <body onload="init()">
@@ -210,6 +368,14 @@ $(document).ready(function(){
     <div id="whiteboard-container">
         <img src="whiteboard.jpg">
         <canvas id="can" width="600" height="420" style="position:absolute;"></canvas>
+        <canvas id="circle" width="300" height="300" style="position: absolute"></canvas>
+        <canvas id="square" width="300" height="300" style="position: absolute"></canvas>
+        <canvas id="triangle" width="300" height="300" style="position: absolute"></canvas>
+    </div>
+
+    <div id="after-submit-buttons">
+        <button type="button" id="retry" onclick="tryAgain()">Try Again</button>
+        <button type="button" id="answer" onclick="showAnswer()">Show Answer</button>
     </div>
 
     <div id="buttons">

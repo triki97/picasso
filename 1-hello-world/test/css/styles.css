@@ -1,8 +1,6 @@
 /* styles.css
 */
 
-
-
 body {
     height: 700px;
     background-color: #FFDA82;
@@ -10,6 +8,34 @@ body {
 }
 
 /* Basic styling */
+
+
+#yes {
+  position: absolute;
+  left: 1000px;
+  top: 200px;
+  display: none;
+}
+
+#no {
+  position: absolute;
+  left: 1000px;
+  top: 200px;
+  display: none;
+}
+
+#suggested-shapes {
+  position: absolute;
+  text-align: center;
+  width: 300px;
+  left: 1000px;
+  top: 300px;
+  display: inline-block;
+}
+#suggested-shapes ul {
+  list-style-type: none;
+  text-align: center;
+}
 
 #container {
     width: 1600px;
@@ -61,6 +87,37 @@ body {
     display: inline-block;
 }
 
+#circle {
+    z: 800;
+    left: 450px;
+    margin-top: 80px;
+    background: #F9F8F2
+}
+#square {
+    z: 800;
+    left: 460px;
+    margin-top: 80px;
+}
+#triangle {
+    z: 800;
+    left: 460px;
+    margin-top: 80px;
+}
+
+#after-submit-buttons {
+  padding-left: 70px;
+  display: inline-block;
+  position: relative;
+  bottom: 120px;
+  left: 240px;
+  z-index: 40;
+}
+
+#after-submit-buttons button {
+    padding: 16px 12px;
+    margin-left: 2px;
+}
+
 #main img {
     width: auto;
     height: 460px;
@@ -80,7 +137,7 @@ body {
 }
 
 #buttons {
-    padding-left: 500px;
+    padding-left: 260px;
     display: inline-block;
     position: relative;
     bottom: 120px;
@@ -90,7 +147,7 @@ body {
 
 #buttons button {
     padding: 16px 12px;
-    margin-left: 20px;
+    margin-left: 8px;
 }
 
 
