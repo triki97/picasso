@@ -137,7 +137,7 @@
         var canvas1 = document.getElementById('circle')
         ctx1 = canvas1.getContext('2d');
         ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-        var canvas2 = document.getElementById('square')
+        var canvas2 = document.getElementById('rectangle')
         ctx2 = canvas2.getContext('2d');
         ctx2.clearRect(0, 0, canvas1.width, canvas1.height);
         var canvas3 = document.getElementById('triangle')
@@ -158,7 +158,7 @@
                 shape = 'triangle';
                 break;
             case 3:
-                shape = 'square';
+                shape = 'rectangle';
                 break;
         }
         var instructions = document.getElementById('instructions');
@@ -190,7 +190,7 @@
       },delay);
     }
       function drawSquare(){
-            var canvas = document.getElementById("square");
+            var canvas = document.getElementById("rectangle");
             var c = canvas.getContext("2d");
             var curPoint = {
                 x : 10,
@@ -254,7 +254,7 @@
         case 'circle':
           drawCircle();
           break;
-        case 'square':
+        case 'rectangle':
           drawSquare();
           break;
         case 'triangle':
@@ -265,12 +265,11 @@
     }
 
     function suggestions() {
+      var temp;
       for(var i = 0; i < labels.length; i++){
-        var temp = "<li>" + labels[i] + "</li>"
+        temp = "<li>" + labels[i] + "</li>"
         document.getElementById('shapes').innerHTML += temp;
       }
-      labels = [];
-
     }
 </script>
 
@@ -288,6 +287,7 @@ $(document).ready(function(){
       dataType: "json",
 
       success: function(data) {
+
         data.forEach((label) => console.log(label));
         for(var i = 0; i < data.length; i++) {
           var label = data[i].toString();
@@ -308,7 +308,8 @@ $(document).ready(function(){
         }
         $('#suggested-shapes').show();
         suggestions();
-
+        labels = [];
+        console.log(labels[0]);
       },
      error: function(data){
        alert("Sorry something went wrong :(");
@@ -369,7 +370,7 @@ $(document).ready(function(){
         <img src="whiteboard.jpg">
         <canvas id="can" width="600" height="420" style="position:absolute;"></canvas>
         <canvas id="circle" width="300" height="300" style="position: absolute"></canvas>
-        <canvas id="square" width="300" height="300" style="position: absolute"></canvas>
+        <canvas id="rectamgle" width="300" height="300" style="position: absolute"></canvas>
         <canvas id="triangle" width="300" height="300" style="position: absolute"></canvas>
     </div>
 
