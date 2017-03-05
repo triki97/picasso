@@ -31,7 +31,7 @@ body {
   left: 1000px;
   top: 300px;
   display: inline-block;
-  font-family: Roboto', Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
 }
 #suggested-shapes ul {
   list-style-type: none;
